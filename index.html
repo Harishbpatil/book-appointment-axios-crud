@@ -130,9 +130,24 @@
         });
       }
 
+      // Function to fetch data from the CRUD API
+      function fetchData() {
+        axios
+          .get(
+            "https://crudcrud.com/api/8c17a6165d164a6cbe3d7421fe3e261f/appointmentData"
+          )
+          .then((response) => {
+            const existingUserDetails = response.data || [];
+            displayUserDetails(existingUserDetails);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      // Fetch data on page load
       document.addEventListener("DOMContentLoaded", function () {
-        const existingUserDetails = deserialize("userDetails") || [];
-        displayUserDetails(existingUserDetails);
+        fetchData();
       });
     </script>
   </body>
