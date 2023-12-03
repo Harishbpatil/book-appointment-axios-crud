@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Booking Appointment App</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-QIB2S5txC6PcC2Pp9U8Yq3Ktj47W2rFz+e3ZlXFl+PpkZMNHg6e7Hyjiq5OAeECC"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <header>
@@ -52,12 +58,25 @@
           }`;
 
           const deleteBtn = document.createElement("button");
-          deleteBtn.textContent = "Delete";
+          deleteBtn.innerHTML = "Delete";
           deleteBtn.className = "delete-btn";
           deleteBtn.addEventListener("click", function () {
-            userDetails.splice(index, 1);
-            serialize("userDetails", userDetails);
-            displayUserDetails(userDetails);
+            // Perform DELETE operation on CRUD API
+            axios
+              .delete(
+                `https://crudcrud.com/api/8c17a6165d164a6cbe3d7421fe3e261f/appointmentData/${user._id}`
+              )
+              .then(() => {
+                // Remove user detail from the list
+                userDetails.splice(index, 1);
+                // Update local storage
+                serialize("userDetails", userDetails);
+                // Update displayed user details
+                displayUserDetails(userDetails);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
           });
 
           const editBtn = document.createElement("button");
